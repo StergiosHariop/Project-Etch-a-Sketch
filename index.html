@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='utf-8'> 
+        <title>Etch-a-Sketch Project</title>
+        <link href="sketch.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+    </head>
+    <body>   
+        <div class="content">
+            
+            <div class="nes-container with-title">
+
+                <span class="title">Etch-a-Sketch</span>
+                <button class="nes-btn is-primary" id="blkbutton">Black</button>
+                <button class="nes-btn is-warning" id="rdmbutton">Rainbow</button>
+                <button class="nes-btn" id="ersbutton">Erase</button>
+                <button class="nes-btn is-success" id="clrbutton">Clear Grid</button>
+                <button class="nes-btn is-error" id="rstbutton">Reset Grid</button>
+        
+                <div id="grid-container"></div>
+                <div class="icons">
+                    <a href="https://github.com/StergiosHariop" target="_blank"><i class="nes-icon github is-medium"></i> </a>
+                    <a href="https://www.linkedin.com/in/stergios-hariopolitis/" target="_blank"><i class="nes-icon linkedin is-medium"></i></a>                  
+                </div>
+            </div>
+        </div>
+
+     <script>
+        const clearButton = document.getElementById('clrbutton');
+        const eraseButton = document.getElementById('ersbutton');
+        const resetButton = document.getElementById('rstbutton'); 
+        const randomButton = document.getElementById('rdmbutton');
+        const blackButton = document.getElementById('blkbutton');
+        const container = document.getElementById('grid-container');
+           
+        let dimensions = 15;
+
+        /*Function for grid creation*/
+        function createGrid(dimensions){
+        
+            document.documentElement.style.setProperty("--squares", dimensions);
+
+            for(let i=0;i<(dimensions*dimensions);i++){
+                
+                let cell = document.createElement('div');               
+              
+                container.appendChild(cell).className = 'grid';                         
+            }
+            document.querySelectorAll('.grid').forEach((div)=>{
+                div.addEventListener('mouseover',                       
+                event => event.target.style.backgroundColor = 'black')               
+                })                
+        }
+
+        /*Rainbow Color Button*/
+        randomButton.addEventListener('click', randomColor) 
+
+        /*Erase Color Button*/
+        eraseButton.addEventListener('click', erase)
+
+        /*Black Color Button*/
+        blackButton.addEventListener('click', blackColor)
+
+        /*Reset Grid Button*/
+        resetButton.addEventListener('click', resetGrid)
+
+        /*Clear Grid Button*/   
+        clearButton.addEventListener('click',(event)=>{
+                    container.innerHTML = '';
+                    createGrid(dimensions);                   
+                })  
+        
+        /*Black Color on mouseover Function*/
+        function blackColor(){
+            document.querySelectorAll('.grid').forEach((cell)=>{
+                    cell.addEventListener('mouseover',                       //Black color
+                    event => event.target.style.backgroundColor = 'black')               
+                    })        
+        }
+
+        /*Random Color on mouseover Function*/
+        function randomColor(){
+            document.querySelectorAll('.grid').forEach((cell)=>{
+                    cell.addEventListener('mouseover', 
+                    event => event.target.style.backgroundColor = getColor())
+                    })
+        }
+
+        /*Random Color Generator Function*/
+        function getColor(){
+            let letters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "a", "b", "c", "d", "e", "f"]
+            let color = "#"
+                for (let i = 0; i < 6; i++) {
+                    let randomCode = letters[Math.floor(Math.random() * letters.length)]
+                    color = color + randomCode;
+                }
+                return color;
+        }
+
+        /*Erase Color Function*/
+        function erase(){
+            document.querySelectorAll('.grid').forEach((div)=>{
+                    div.addEventListener('mouseover',                       //Black color
+                    event => event.target.style.backgroundColor = 'white')
+                })
+        }
+
+        /*Reset Grid Dimensions Function*/
+        function resetGrid(){
+            dimensions = prompt('New Grid Dimensions:');
+            if(isNaN(dimensions) || dimensions === ''){
+                alert('Invalid Input!');
+                resetGrid();    
+            }
+            else{
+            container.innerHTML = '';
+            createGrid(dimensions);
+            }           
+        }
+
+        /*Initialize Grid Creation*/
+        createGrid(dimensions);
+         
+     </script>   
+    </body>
+</html>
