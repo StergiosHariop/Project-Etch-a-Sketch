@@ -2,7 +2,8 @@
 
 https://www.theodinproject.com/courses/web-development-101/lessons/etch-a-sketch-project
     
-Written with HTML5/CCS3/JavaScript
+- HTML5/CCS3/JavaScript.
+- NES.css used (https://nostalgic-css.github.io/NES.css/).
 
 <h3><b>Live:</b></h3>
 https://stergioshariop.github.io/Project-Etch-a-Sketch/
